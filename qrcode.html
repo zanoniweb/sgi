@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SISTEMA DE GESTÃO DE IMOBILIÁRIA: GERAR QRCODE PARA PIX</title>
+  
+  <style>
+
+ /* Começo do código da estilização do menu de navegação */
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #004080;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.3s;
+}
+
+.menu ul li a:hover {
+  color: #ffd700;
+}
+
+.menu-icon {
+  font-size: 1.8em;
+  display: none;
+  cursor: pointer;
+}
+
+/* Esconde o checkbox */
+.menu-toggle {
+  display: none;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu ul {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #004080;
+    width: 100%;
+    display: none;
+  }
+
+  .menu ul li {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .menu-toggle:checked + .menu-icon + .menu ul {
+    display: flex;
+  }
+}
+
+
+/* Final do código da estilização do menu de navegação */
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #00796b;
+    }
+
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1.1em;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #00796b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    #qrcode {
+      margin-top: 20px;
+    }
+  </style>
+
+</head>
+
+<header class="navbar">
+
+ 
+    
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+
+    <nav class="menu">
+      <ul>
+
+         <li><a href="geracaodocumentos.html">Voltar Geração de Documentos</a></li>
+        <li><a href="institucional.html">Sair</a></li>
+     
+      </ul>
+    </nav>
+  </header>
+
+<body>
+  <h1>Gerador de QR Code PIX</h1>
+  <div class="container">
+    <label for="valor">Digite o valor (R$):</label>
+    <input type="number" id="valor" placeholder="Ex: 100.00" step="0.01" min="0">
+    <button onclick="gerarQRCode()">Gerar QR Code</button>
+    <div id="qrcode"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script>
+    function gerarQRCode() {
+      const valor = document.getElementById('valor').value;
+      const chavePix = '43999944331';
+
+      if (!valor || valor <= 0) {
+        alert('Digite um valor válido.');
+        return;
+      }
+
+      // Remove QRCode anterior se houver
+      document.getElementById('qrcode').innerHTML = '';
+
+      // Monta o payload PIX (simplificado)
+      const payload = gerarPayloadPix(chavePix, valor);
+
+      // Gera o QR Code
+      new QRCode(document.getElementById("qrcode"), {
+        text: payload,
+        width: 256,
+        height: 256,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    function gerarPayloadPix(chave, valor) {
+      // Payload PIX simplificado
+      // Para produção, use bibliotecas que geram QR PIX com CRC corretamente
+      return `00020126360014BR.GOV.BCB.PIX01${chave.length.toString().padStart(2, '0')}${chave}520400005303986540${valor.length}${valor}5802BR5909NomeTeste6009SAO PAULO62100506Site6304ABCD`; 
+    }
+  </script>
+
+    <center>
+        <i>
+        <footer>
+            <p>Web programa desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
+        </footer>
+        </i>
+    </center>
+
+
+</body>
+</html>

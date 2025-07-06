@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de Venda de Imóvel</title>
+ 
+<style>
+
+ /* Começo do código da estilização do menu de navegação */
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #004080;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.3s;
+}
+
+.menu ul li a:hover {
+  color: #ffd700;
+}
+
+.menu-icon {
+  font-size: 1.8em;
+  display: none;
+  cursor: pointer;
+}
+
+/* Esconde o checkbox */
+.menu-toggle {
+  display: none;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu ul {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #004080;
+    width: 100%;
+    display: none;
+  }
+
+  .menu ul li {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .menu-toggle:checked + .menu-icon + .menu ul {
+    display: flex;
+  }
+}
+
+
+/* Final do código da estilização do menu de navegação */
+
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+  margin: 0;
+}
+
+.container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+form fieldset {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+form input {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto 0;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+td, th {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+@media print {
+  button {
+    display: none;
+  }
+}
+
+
+
+</style>
+
+
+</head>
+
+
+<header class="navbar">
+    <div class="logo">
+      <b><p>S. G. I.</p></b>
+    </div>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+
+    <nav class="menu">
+      <ul>
+
+         <li><a href="geracaodocumentos.html">Voltar Geração de Documentos</a></li>
+        <li><a href="institucional.html">Sair</a></li>
+     
+      </ul>
+    </nav>
+  </header>
+
+
+<body>
+  <div class="container">
+    <h1>Calculadora de Venda de Imóvel</h1>
+    
+    <form id="calcForm">
+      <fieldset>
+
+        <legend>Dados do Imóvel</legend>
+        <input type="text" id="logradouro" placeholder="Logradouro" required autocomplete="off">
+        <input type="text" id="numero" placeholder="Número" required autocomplete="off">
+        <input type="text" id="loteamento" placeholder="Loteamento" required autocomplete="off">
+        <input type="text" id="quadra" placeholder="Quadra" required autocomplete="off">
+        <input type="text" id="lote" placeholder="Lote" required autocomplete="off">
+
+      </fieldset>
+
+      <fieldset>
+        <legend>Valores</legend>
+        
+        <input type="number" step="0.01" id="valorEscritura" placeholder="Valor da Escritura (R$)" required autocomplete="off">
+        <input type="number" step="0.01" id="valorVenda" placeholder="Valor da Venda (R$)" required autocomplete="off">
+      
+      </fieldset>
+
+      <button type="submit">Calcular</button>
+    </form>
+
+      <div id="pdfContent">
+      
+      <h2>Resultado da Apuração</h2>
+     
+      <h3>Informações do Imóvel</h3>
+      <p><strong>Logradouro:</strong> <span id="pdfLogradouro"></span></p>
+      <p><strong>Loteamento:</strong> <span id="pdfLoteamento"></span></p>
+
+      <h3>Apuração</h3>
+      
+      <table>
+      <tr><th>Descrição</th><th>Valor (R$)</th></tr>
+      <tr><td>Valor da Escritura</td><td id="pdfEscritura"></td></tr>
+      <tr><td>Valor da Venda</td><td id="pdfVenda"></td></tr>
+      <tr><td>Ganho de Capital</td><td id="pdfGanho"></td></tr>
+      <tr><td>Imposto de Renda (15%)</td><td id="pdfIR"></td></tr>
+      <tr><td>Comissão do Corretor (6%)</td><td id="pdfCorretor"></td></tr>
+      <tr><th>Valor Líquido da Venda</th><th id="pdfLiquido"></th></tr>
+      </table>
+      </div>
+    
+      
+      <button id="btnPDF" onclick="gerarPDF()" style="display: none;">Salvar em PDF</button>
+      
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
+  <script>
+
+document.getElementById("calcForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const logradouro = document.getElementById("logradouro").value;
+    const numero = document.getElementById("numero").value;
+    const loteamento = document.getElementById("loteamento").value;
+    const quadra = document.getElementById("quadra").value;
+    const lote = document.getElementById("lote").value;
+    const valorEscritura = parseFloat(document.getElementById("valorEscritura").value);
+    const valorVenda = parseFloat(document.getElementById("valorVenda").value);
+
+    const ganhoCapital = valorVenda - valorEscritura;
+    const impostoRenda = ganhoCapital * 0.15;
+    const corretagem = valorVenda * 0.06;
+    const valorLiquido = valorVenda - impostoRenda - corretagem;
+
+    // Preenche os dados do PDF
+    document.getElementById("pdfLogradouro").innerText = `${logradouro}, Nº ${numero}`;
+    document.getElementById("pdfLoteamento").innerText = `${loteamento} - Quadra ${quadra} - Lote ${lote}`;
+    document.getElementById("pdfEscritura").innerText = valorEscritura.toFixed(2);
+    document.getElementById("pdfVenda").innerText = valorVenda.toFixed(2);
+    document.getElementById("pdfGanho").innerText = ganhoCapital.toFixed(2);
+    document.getElementById("pdfIR").innerText = impostoRenda.toFixed(2);
+    document.getElementById("pdfCorretor").innerText = corretagem.toFixed(2);
+    document.getElementById("pdfLiquido").innerText = valorLiquido.toFixed(2);
+
+    document.getElementById("pdfContent").style.display = "block";
+    
+    document.getElementById("btnPDF").style.display = "block"; // ← MOSTRAR o botão só após cálculo
+
+
+  });
+
+  // <-- FUNÇÃO MOVIDA PARA FORA -->
+  function gerarPDF() {
+  const element = document.getElementById("pdfContent");
+
+  // Força renderização antes da captura
+  setTimeout(() => {
+    const opt = {
+      margin: 0.5,
+      filename: 'resultado-venda-imovel.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }, 200); // Aguarda 200ms para garantir que o conteúdo esteja renderizado
+}
+
+
+  </script>
+
+</body>
+</html>

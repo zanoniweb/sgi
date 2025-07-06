@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SISTEMA DE GESTÃO DE IMOBILIÁRIA: Gerador de Boleto</title>
+
+  <style>
+
+/* Começo do código da estilização do menu de navegação */
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #004080;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.3s;
+}
+
+.menu ul li a:hover {
+  color: #ffd700;
+}
+
+.menu-icon {
+  font-size: 1.8em;
+  display: none;
+  cursor: pointer;
+}
+
+/* Esconde o checkbox */
+.menu-toggle {
+  display: none;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu ul {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #004080;
+    width: 100%;
+    display: none;
+  }
+
+  .menu ul li {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .menu-toggle:checked + .menu-icon + .menu ul {
+    display: flex;
+  }
+}
+
+
+/* Final do código da estilização do menu de navegação */
+
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: auto;
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1em;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    #resumo {
+      margin-top: 20px;
+      text-align: left;
+      display: none;
+      background: #eef;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+
+<header class="navbar">
+
+   <b><p>S. G. I.</p></b>
+    
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+
+    <nav class="menu">
+      <ul>
+
+         <li><a href="geracaodocumentos.html">Voltar Geração de Documentos</a></li>
+        <li><a href="institucional.html">Sair</a></li>
+     
+      </ul>
+    </nav>
+  </header>
+
+<body>
+
+  <div class="container">
+    <h2>Gerador de Boleto PDF</h2>
+    <input type="number" id="valor" placeholder="Digite o valor (R$)" min="1" step="0.01" />
+
+    <select id="tipo">
+      <option value="quitacao">Quitação à vista</option>
+      <option value="parcelado">Parcelado</option>
+    </select>
+
+    <select id="parcelas" class="hidden">
+      <option value="2">2 vezes</option>
+      <option value="3">3 vezes</option>
+      <option value="4">4 vezes</option>
+      <option value="5">5 vezes</option>
+      <option value="6">6 vezes</option>
+      <option value="7">7 vezes</option>
+      <option value="8">8 vezes</option>
+      <option value="9">9 vezes</option>
+      <option value="10">10 vezes</option>
+      <option value="11">11 vezes</option>
+      <option value="12">12 vezes</option>
+    </select>
+
+    <button onclick="gerarResumo()">Gerar</button>
+
+    <div id="resumo"></div>
+
+    <button id="btnConfirmar" class="hidden" onclick="gerarPDF()">Confirmar e Baixar PDF</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const tipoSelect = document.getElementById('tipo');
+    const parcelasSelect = document.getElementById('parcelas');
+    const resumoDiv = document.getElementById('resumo');
+    const btnConfirmar = document.getElementById('btnConfirmar');
+
+    tipoSelect.addEventListener('change', () => {
+      if (tipoSelect.value === 'parcelado') {
+        parcelasSelect.classList.remove('hidden');
+      } else {
+        parcelasSelect.classList.add('hidden');
+      }
+    });
+
+    function gerarResumo() {
+      const valor = parseFloat(document.getElementById('valor').value);
+      const tipo = tipoSelect.value;
+      const parcelas = parseInt(parcelasSelect.value);
+
+      if (!valor || valor <= 0) {
+        alert("Digite um valor válido.");
+        return;
+      }
+
+      let html = `<h3>Resumo do(s) Boleto(s)</h3>`;
+      html += `<p><strong>Banco:</strong> Caixa Econômica Federal</p>`;
+      html += `<p><strong>CNPJ:</strong> 12.345.678/0001-99</p>`;
+      html += `<p><strong>Agência:</strong> 1845</p>`;
+      html += `<p><strong>Conta Corrente:</strong> 586148-2</p>`;
+
+      if (tipo === 'quitacao') {
+        html += `<p><strong>Valor:</strong> R$ ${valor.toFixed(2)}</p>`;
+        html += `<p><strong>Forma de Pagamento:</strong> À vista</p>`;
+      } else {
+        const valorParcela = valor / parcelas;
+        html += `<p><strong>Valor Total:</strong> R$ ${valor.toFixed(2)}</p>`;
+        html += `<p><strong>Parcelamento:</strong> ${parcelas}x de R$ ${valorParcela.toFixed(2)}</p>`;
+      }
+
+      html += `<p><strong>Observações:</strong><br>
+      - Pagar apenas na data certa e no banco especificado<br>
+      - Após o vencimento, retornar à instituição credora para corrigir o valor da guia.
+      </p>`;
+
+      resumoDiv.innerHTML = html;
+      resumoDiv.style.display = 'block';
+      btnConfirmar.classList.remove('hidden');
+    }
+
+    function desenharBoleto(titulo, valorParcela, vencimento, pagina = 1, totalPaginas = 1) {
+      doc.setFontSize(10);
+      doc.setDrawColor(0);
+      doc.setLineWidth(0.3);
+
+      // Borda principal
+      doc.rect(10, 10, 190, 130);
+
+      // Cabeçalho
+      doc.setFontSize(14);
+      doc.text("IMOBILIARIA 1000 DO BRASIL", 15, 18);
+      doc.setFontSize(12);
+      doc.text(titulo, 140, 18);
+
+      doc.line(10, 22, 200, 22);
+
+      // Informações bancárias
+      doc.setFontSize(10);
+      doc.text("Banco: Caixa Econômica Federal", 15, 28);
+      doc.text("Agência: 1845", 140, 28);
+      doc.text("Conta Corrente: 586148-2", 15, 34);
+      doc.text("CNPJ: 12.345.678/0001-99", 140, 34);
+
+      // Vencimento
+      doc.rect(15, 40, 85, 10);
+      doc.text("Data de Vencimento", 17, 45);
+      doc.text(vencimento.toLocaleDateString(), 65, 45);
+
+      // Valor
+      doc.rect(110, 40, 85, 10);
+      doc.text("Valor", 112, 45);
+      doc.text(`R$ ${valorParcela.toFixed(2)}`, 160, 45);
+
+      // Pagador
+      doc.rect(15, 55, 180, 10);
+      doc.text("Pagador: Nome do Cliente (exemplo)", 17, 61);
+
+      // Beneficiário
+      doc.rect(15, 70, 180, 10);
+      doc.text("Beneficiário: IMOBILIARIA 1000 DO BRASIL", 17, 76);
+
+      // Instruções
+      doc.rect(15, 85, 180, 30);
+      doc.setFontSize(9);
+      doc.text("Instruções:", 17, 91);
+      doc.text("- Pagar apenas na data certa e no banco especificado.", 17, 97);
+      doc.text("- Após o vencimento, retornar à instituição credora para nova via.", 17, 103);
+      doc.text("- Este boleto é apenas uma simulação para fins educacionais.", 17, 109);
+
+      // Rodapé
+      if (totalPaginas > 1) {
+        doc.setFontSize(8);
+        doc.text(`Página ${pagina} de ${totalPaginas}`, 170, 138);
+      }
+    }
+
+    async function gerarPDF() {
+      const valor = parseFloat(document.getElementById('valor').value);
+      const tipo = tipoSelect.value;
+      const parcelas = parseInt(parcelasSelect.value);
+      const { jsPDF } = window.jspdf;
+      doc = new jsPDF();
+      const hoje = new Date();
+
+      if (tipo === 'quitacao') {
+        const vencimento = new Date();
+        vencimento.setDate(hoje.getDate() + 7);
+        desenharBoleto("BOLETO - QUITAÇÃO À VISTA", valor, vencimento);
+        doc.save("boleto_quitacao.pdf");
+      } else {
+        for (let i = 1; i <= parcelas; i++) {
+          const valorParcela = valor / parcelas;
+          const venc = new Date();
+          venc.setMonth(hoje.getMonth() + i);
+          if (i > 1) doc.addPage();
+          desenharBoleto(`BOLETO - PARCELA ${i} de ${parcelas}`, valorParcela, venc, i, parcelas);
+        }
+        doc.save("boleto_parcelado.pdf");
+      }
+    }
+  </script>
+</body>
+</html>

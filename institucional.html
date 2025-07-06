@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA DE GESTÃO DE IMOBILIÁRIA.</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+
+
+/* Começo do código de estilização para acessar sistemas */
+
+.menu {
+    position: relative;
+    z-index: 2; /* Acima do overlay (.hero-section::before) */
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.menu a:hover {
+    color: #007bff;
+}
+
+
+/* Final do código de estilização para acessar sistemas */
+
+/* Importação de fonte */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #333;
+}
+
+/* Seção Hero (Foto de Fundo) */
+.hero-section {
+    background: url('https://via.placeholder.com/1500x800/222831/EEEEEE?text=Sua+Imobiliaria') no-repeat center center/cover; /* Substitua pela URL da sua imagem de fundo */
+    color: #fff;
+    text-align: center;
+    padding: 150px 20px;
+    height: 100vh; /* Ocupa a altura total da viewport */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay escuro para melhorar a leitura do texto */
+}
+
+.hero-content {
+    position: relative; /* Para garantir que o conteúdo fique acima do overlay */
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-content p {
+    font-size: 1.5em;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Seção de Serviços */
+.services-section {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #f8f8f8;
+}
+
+.services-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #007bff; /* Cor primária */
+}
+
+.services-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.service-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 280px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.service-card h3 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.service-card p {
+    font-size: 1.1em;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Boxes de Detalhe dos Serviços */
+.service-detail-box {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    max-width: 700px;
+    margin: 50px auto 20px auto;
+    text-align: left;
+    display: none; /* Oculto por padrão */
+    animation: fadeIn 0.5s ease-out; /* Animação de entrada */
+    border-left: 5px solid #007bff;
+    position: relative;
+}
+
+.service-detail-box h4 {
+    font-size: 2em;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.service-detail-box p {
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.service-detail-box .close-detail-box {
+    background-color: #dc3545; /* Vermelho para fechar */
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    display: block; /* Para que o botão ocupe sua própria linha */
+    margin: 0 auto; /* Centraliza o botão */
+}
+
+.service-detail-box .close-detail-box:hover {
+    background-color: #c82333;
+}
+
+/* Animação para aparecer */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Rodapé */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.contact-info, .location-info {
+    flex: 1;
+    min-width: 280px;
+    text-align: left;
+}
+
+.footer-content h3 {
+    color: #007bff;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+.footer-content p {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.copyright {
+    border-top: 1px solid #555;
+    padding-top: 20px;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.8em;
+    color: #ccc;
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-content p {
+        font-size: 1.2em;
+    }
+
+    .services-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-card {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact-info, .location-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2em;
+    }
+
+    .hero-content p {
+        font-size: 1em;
+    }
+
+    .services-section h2 {
+        font-size: 2em;
+    }
+
+    .service-card h3 {
+        font-size: 1.5em;
+    }
+
+    .service-detail-box {
+        padding: 25px;
+    }
+
+    .service-detail-box h4 {
+        font-size: 1.5em;
+    }
+}
+
+
+    </style>
+
+</head>
+<body>
+
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1>Sua Imobiliária</h1>
+            <p>Conectando você ao seu novo lar ou investimento.</p>
+        </div>
+
+    <nav class="menu">
+      <ul>
+
+         <li><a href="acesso.html">Acessar Sistemas</a></li>
+        
+     
+      </ul>
+    </nav>
+    
+    </header>
+
+
+    <main>
+        <section class="services-section">
+            <h2>Nossos Serviços</h2>
+            <div class="services-container">
+                <div class="service-card" data-service="venda">
+                    <h3>Venda de Imóveis</h3>
+                    <p>Encontre o imóvel ideal para comprar ou anuncie o seu para venda com agilidade e segurança.</p>
+                </div>
+                <div class="service-card" data-service="locacao">
+                    <h3>Locação de Imóveis</h3>
+                    <p>Alugue o imóvel dos seus sonhos ou coloque seu patrimônio para locação com toda a comodidade.</p>
+                </div>
+                <div class="service-card" data-service="gestao">
+                    <h3>Gestão de Imóveis</h3>
+                    <p>Administração completa para seu imóvel, garantindo rentabilidade e tranquilidade.</p>
+                </div>
+                <div class="service-card" data-service="avaliacao">
+                    <h3>Avaliação de Imóveis</h3>
+                    <p>Avaliações precisas e profissionais para todos os tipos de imóveis.</p>
+                </div>
+            </div>
+
+            <div id="detail-box-venda" class="service-detail-box">
+                <h4>Venda de Imóveis: Detalhes</h4>
+                <p>Nossa equipe especializada está pronta para auxiliar você em todas as etapas da compra ou venda do seu imóvel. Oferecemos um portfólio diversificado de casas, apartamentos, terrenos e imóveis comerciais, além de uma estratégia de marketing eficaz para quem busca vender. Cuidamos da documentação, negociação e acompanhamento jurídico para garantir uma transação segura e transparente.</p>
+                <button class="close-detail-box">Fechar</button>
+            </div>
+            <div id="detail-box-locacao" class="service-detail-box">
+                <h4>Locação de Imóveis: Detalhes</h4>
+                <p>Seja para morar ou investir, temos as melhores opções de locação. Realizamos a busca pelo inquilino ideal, análise de crédito, elaboração de contrato e toda a gestão da locação, desde o recebimento do aluguel até a manutenção. Para quem busca alugar, oferecemos um processo simplificado e suporte completo.</p>
+                <button class="close-detail-box">Fechar</button>
+            </div>
+            <div id="detail-box-gestao" class="service-detail-box">
+                <h4>Gestão de Imóveis: Detalhes</h4>
+                <p>Deixe a burocracia conosco! Nosso serviço de gestão de imóveis abrange desde a captação de inquilinos e cobrança de aluguéis até a manutenção preventiva e corretiva, assessoria jurídica e contábil. Garanta a valorização do seu patrimônio e a máxima rentabilidade sem preocupações.</p>
+                <button class="close-detail-box">Fechar</button>
+            </div>
+            <div id="detail-box-avaliacao" class="service-detail-box">
+                <h4>Avaliação de Imóveis: Detalhes</h4>
+                <p>Nossos avaliadores são credenciados e utilizam metodologias reconhecidas para fornecer laudos técnicos precisos e detalhados. Ideal para compra, venda, inventários, garantias e análises de mercado. Conte com a expertise da nossa imobiliária para ter o valor justo do seu imóvel.</p>
+                <button class="close-detail-box">Fechar</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Contato</h3>
+                <p>Telefone: (43) XXXX-XXXX</p>
+                <p>E-mail: contato@suaimobiliaria.com.br</p>
+                <p>WhatsApp: (43) 9XXXX-XXXX</p>
+            </div>
+            <div class="location-info">
+                <h3>Localização</h3>
+                <p>Rua XXXXXXXXXXXXXXXXXX, nº [Número]</p>
+                <p>Bairro XXXXXX - CEP XXXXX-XXX</p>
+                <p>Londrina - PR</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Sua Imobiliária. Todos os direitos reservados a Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"</p>
+        </div>
+    </footer>
+
+    <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    const serviceCards = document.querySelectorAll('.service-card');
+    const detailBoxes = document.querySelectorAll('.service-detail-box');
+    const closeButtons = document.querySelectorAll('.close-detail-box');
+
+    serviceCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const serviceType = card.dataset.service;
+            const targetDetailBox = document.getElementById(`detail-box-${serviceType}`);
+
+            // Oculta todos os boxes de detalhe antes de mostrar o clicado
+            detailBoxes.forEach(box => {
+                box.style.display = 'none';
+            });
+
+            // Mostra o box de detalhe correspondente
+            if (targetDetailBox) {
+                targetDetailBox.style.display = 'block';
+            }
+        });
+    });
+
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const parentDetailBox = button.closest('.service-detail-box');
+            if (parentDetailBox) {
+                parentDetailBox.style.display = 'none';
+            }
+        });
+    });
+});
+
+
+    </script>
+
+</body>
+</html>

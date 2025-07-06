@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SISTEMA DE GESTÃO DE IMOBILIÁRIA: CONTRATO DE PRESTAÇÃO DE SERVIÇOS IMOBILIÁRIOS</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+ /* Começo do código da estilização do menu de navegação */
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #004080;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.3s;
+}
+
+.menu ul li a:hover {
+  color: #ffd700;
+}
+
+.menu-icon {
+  font-size: 1.8em;
+  display: none;
+  cursor: pointer;
+}
+
+/* Esconde o checkbox */
+.menu-toggle {
+  display: none;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu ul {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #004080;
+    width: 100%;
+    display: none;
+  }
+
+  .menu ul li {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .menu-toggle:checked + .menu-icon + .menu ul {
+    display: flex;
+  }
+}
+
+
+/* Final do código da estilização do menu de navegação */
+
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20mm;
+    }
+    fieldset {
+      margin-bottom: 15px;
+      padding: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 15px;
+      font-size: 16px;
+    }
+    @media print {
+      button { display: none; }
+    }
+  </style>
+</head>
+
+<header class="navbar">
+    <div class="logo">
+      <b><p>S. G. I.</p></b>
+    </div>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+
+    <nav class="menu">
+      <ul>
+
+         <li><a href="geracaodocumentos.html">Voltar Geração de Documentos</a></li>
+        <li><a href="institucional.html">Sair</a></li>
+     
+      </ul>
+    </nav>
+  </header>
+
+
+
+<body>
+  <h1><i class="fas fa-file-contract"></i> Contrato de Prestação de Serviços Imobiliários</h1>
+
+  <form id="formContrato">
+    <fieldset>
+      <legend>Dados do Cliente</legend>
+      <label>Nome: <input type="text" id="nomeCliente" required></label>
+      <label>CPF: <input type="text" id="cpfCliente" required></label>
+      <label>Endereço: <input type="text" id="enderecoCliente" required></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Dados da Corretora</legend>
+      <label>Nome da Imobiliária: <input type="text" id="nomeImobiliaria" required></label>
+      <label>CNPJ: <input type="text" id="cnpjImobiliaria" required></label>
+      <label>Endereço: <input type="text" id="enderecoImobiliaria" required></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Serviços Contratados</legend>
+      <label>Descrição dos serviços: <textarea id="descricaoServicos" rows="4" required></textarea></label>
+      <label>Valor: <input type="number" id="valorContrato" required></label>
+      <label>Forma de Pagamento: <input type="text" id="formaPagamento" required></label>
+      <label>Data de Início: <input type="date" id="dataInicio" required></label>
+      <label>Data de Término: <input type="date" id="dataFim" required></label>
+    </fieldset>
+
+    <button type="submit">Gerar Contrato</button>
+  </form>
+
+  <div id="contratoGerado" style="display:none;">
+    <div id="conteudoContrato"></div>
+    <button id="baixarPDF" type="button">Baixar PDF</button>
+  </div>
+
+  <script>
+    document.getElementById('formContrato').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nomeCliente = document.getElementById('nomeCliente').value;
+      const cpfCliente = document.getElementById('cpfCliente').value;
+      const enderecoCliente = document.getElementById('enderecoCliente').value;
+      const nomeImobiliaria = document.getElementById('nomeImobiliaria').value;
+      const cnpjImobiliaria = document.getElementById('cnpjImobiliaria').value;
+      const enderecoImobiliaria = document.getElementById('enderecoImobiliaria').value;
+      const descricaoServicos = document.getElementById('descricaoServicos').value;
+      const valorContrato = document.getElementById('valorContrato').value;
+      const formaPagamento = document.getElementById('formaPagamento').value;
+      const dataInicio = document.getElementById('dataInicio').value;
+      const dataFim = document.getElementById('dataFim').value;
+
+      const contrato = `
+        <h2>CONTRATO DE PRESTAÇÃO DE SERVIÇOS IMOBILIÁRIOS</h2>
+        <p><strong>CONTRATANTE:</strong> ${nomeCliente}, CPF ${cpfCliente}, residente em ${enderecoCliente}.</p>
+        <p><strong>CONTRATADA:</strong> ${nomeImobiliaria}, CNPJ ${cnpjImobiliaria}, com sede em ${enderecoImobiliaria}.</p>
+        <p>As partes acima identificadas têm entre si justo e contratado o seguinte:</p>
+        <p><strong>Cláusula 1ª - Objeto:</strong> O presente contrato tem como objeto a prestação dos seguintes serviços: ${descricaoServicos}.</p>
+        <p><strong>Cláusula 2ª - Valor:</strong> O valor total é de R$ ${valorContrato}, a ser pago da seguinte forma: ${formaPagamento}.</p>
+        <p><strong>Cláusula 3ª - Vigência:</strong> O presente contrato terá início em ${dataInicio} e término em ${dataFim}.</p>
+        <p>Por estarem de acordo, firmam o presente instrumento em duas vias de igual teor.</p>
+        <p><strong>Local/Data:</strong> ________________________/____/____</p>
+        <p><strong>Assinaturas:</strong></p>
+        <p>__________________________________<br>Contratante: ${nomeCliente}</p>
+        <p>__________________________________<br>Contratada: ${nomeImobiliaria}</p>
+      `;
+
+      document.getElementById('conteudoContrato').innerHTML = contrato;
+      document.getElementById('contratoGerado').style.display = 'block';
+    });
+
+    document.getElementById('baixarPDF').addEventListener('click', function () {
+      const { jsPDF } = window.jspdf;
+      html2canvas(document.getElementById('conteudoContrato')).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('contrato_prestacao_servicos.pdf');
+      });
+    });
+  </script>
+</body>
+</html>

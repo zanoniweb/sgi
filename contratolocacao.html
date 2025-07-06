@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SISTEMA DE GESTÃO DE IMOBILIÁRIA: CONTRATO DE LOCAÇÃO DE IMÓVEL.</title>
+ 
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+  /* Começo do código da estilização do menu de navegação */
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #004080;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.3s;
+}
+
+.menu ul li a:hover {
+  color: #ffd700;
+}
+
+.menu-icon {
+  font-size: 1.8em;
+  display: none;
+  cursor: pointer;
+}
+
+/* Esconde o checkbox */
+.menu-toggle {
+  display: none;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu ul {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #004080;
+    width: 100%;
+    display: none;
+  }
+
+  .menu ul li {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .menu-toggle:checked + .menu-icon + .menu ul {
+    display: flex;
+  }
+}
+
+
+/* Final do código da estilização do menu de navegação */
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  margin: 20mm;
+  color: #000;
+}
+
+fieldset {
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  font-size: 16px;
+}
+
+@media print {
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+    }
+
+    #conteudoContrato {
+        width: 180mm;
+        margin: 0 auto;
+        font-size: 14pt;
+        line-height: 1.6;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    #conteudoContrato p {
+        margin-bottom: 10px;
+    }
+
+    #conteudoContrato h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    p, div, span, label {
+        page-break-inside: avoid;
+        orphans: 3;
+        widows: 3;
+    }
+
+    button {
+        display: none;
+    }
+
+    @page {
+        size: A4;
+        margin: 20mm;
+    }
+}
+
+
+</style>
+
+</head>
+
+<header class="navbar">
+    <div class="logo">
+       <b><p>S. G. I.</p></b>
+    </div>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+
+    <nav class="menu">
+      <ul>
+
+         <li><a href="geracaodocumentos.html">Voltar Geração de Documentos</a></li>
+        <li><a href="institucional.html">Sair</a></li>
+     
+      </ul>
+    </nav>
+  </header>
+
+<body>
+
+  <h1>Coleta de dados: Contrato de Locação de Imóvel</h1>
+  <form id="formContrato">
+    <fieldset>
+      <b><legend>Dados do Locador (a)</legend></b>
+      <label>Nome: <input type="text" id="nomeLocador" required autocomplete="off"></label><br>
+      <label>CPF: <input type="text" id="cpfLocador" required autocomplete="off"></label><br>
+      <label>Endereço: <input type="text" id="enderecoLocador" required autocomplete="off"></label>
+      <label>Data da Locação Inicial: <input type="text" id="dataLocacao" required autocomplete="off"></label>
+      <label>Data da Locação Final: <input type="text" id="dataFinal" required autocomplete="off"></label>
+    </fieldset>
+
+    <fieldset>
+      <b><legend>Dados do Locatário (a)</legend></b>
+      <label>Nome: <input type="text" id="nomeLocatario" required autocomplete="off"></label><br>
+      <label>CPF: <input type="text" id="cpfLocatario" required autocomplete="off"></label><br>
+      <label>Endereço: <input type="text" id="enderecoLocatario" required autocomplete="off"></label>
+    </fieldset>
+
+    <fieldset>
+      <b><legend>Dados da Testemunha 01</legend></b>
+      <label>Nome: <input type="text" id="nomeTestemunha01" required autocomplete="off"></label><br>
+      <label>CPF: <input type="text" id="cpfTestemunha01" required autocomplete="off"></label><br>
+    </fieldset>
+
+    <fieldset>
+      <b><legend>Dados da Testemunha 02</legend></b>
+      <label>Nome: <input type="text" id="nomeTestemunha02" required autocomplete="off"></label><br>
+      <label>CPF: <input type="text" id="cpfTestemunha02" required autocomplete="off"></label><br>
+    </fieldset>
+
+    <fieldset>
+      <b><legend>Detalhes do Imóvel Obejto da Locação:</legend></b>
+      
+      <label>Endereço do Imóvel: <input type="text" id="enderecoImovel" required autocomplete="off"></label><br>
+
+      <label>Loteamento: <input type="text" id="loteamentoBairro" required autocomplete="off"></label><br>
+
+      <label>Quadra: <input type="text" id="numeroQuadra" required autocomplete="off"></label><br>
+
+      <label>Lote: <input type="text" id="numeroLote" required autocomplete="off"></label><br>
+   
+      <label>Área do Lote (m²): <input type="text" id="areaLote" required autocomplete="off"></label><br>
+  
+      <label>Área Edificada (m²): <input type="text" id="areaEdificada" required autocomplete="off"></label><br>
+  
+      <label>Valor: <input type="number" id="valorAluguel" required autocomplete="off"></label><br>
+
+      <label>Forma de Pagamento: <input type="text" id="formaPagamentoAluguel" required autocomplete="off"></label>
+    </fieldset>
+
+    <button type="submit">Gerar Contrato</button>
+  </form>
+
+  <div id="contratoGerado" style="display:none;">
+    <div id="conteudoContrato"></div>
+    <button id="baixarPDF" type="button">Baixar PDF</button>
+  </div>
+
+   <center>
+        <i>
+        <footer>
+            <p>Web programa desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
+        </footer>
+        </i>
+    </center>
+
+  <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('formContrato').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const nomeLocador = document.getElementById('nomeLocador').value;
+    const cpfLocador = document.getElementById('cpfLocador').value;
+    const enderecoLocador = document.getElementById('enderecoLocador').value;
+
+    const nomeLocatario = document.getElementById('nomeLocatario').value;
+    const cpfLocatario = document.getElementById('cpfLocatario').value;
+    const enderecoLocatario = document.getElementById('enderecoLocatario').value;
+    const dataLocacao = document.getElementById('dataLocacao').value;
+     const dataFinal = document.getElementById('dataFinal').value;
+
+    const nomeTestemunha01 = document.getElementById('nomeTestemunha01').value;
+    const cpfTestenhuma01 = document.getElementById('cpfTestemunha01').value;
+    
+    const nomeTestemunha02 = document.getElementById('nomeTestemunha02').value;
+    const cpfTestenhuma02 = document.getElementById('cpfTestemunha02').value;
+
+    const enderecoImovel = document.getElementById('enderecoImovel').value;
+    const loteamentoBairro = document.getElementById('loteamentoBairro').value;
+    const numeroQuadra = document.getElementById('numeroQuadra').value;
+    const numeroLote = document.getElementById('numeroLote').value;
+    const areaLote = document.getElementById('areaLote').value;
+    const areaEdificada = document.getElementById('areaEdificada').value;
+    const valorAluguel = document.getElementById('valorAluguel').value;
+    const formaPagamentoAluguel = document.getElementById('formaPagamentoAluguel').value;
+
+    const contrato = `
+    
+    <center>
+    
+    <h1>IMOBILIÁRIO NOME XXXXXX - CNPJ Nº XXXXXXXXXXXXXXXXXXXXXXX</h1>
+
+    <h2>CONTRATO DE LOCAÇÃO DE IMÓVEL</h2>
+
+    </center>
+
+    <hr>
+
+
+    <justify>
+
+    <p>Data da Inicial da Locação: ${dataLocacao}.</p>
+    
+    <p>Data da Final da Locação: ${dataFinal}.</p>
+
+    <p> LOCADOR (A): ${nomeLocador}, CPF: ${cpfLocador}, residente em ${enderecoLocador}.</p>
+   
+    <p>LOCATÁRIO (A): ${nomeLocatario}, CPF: ${cpfLocatario}, residente em ${enderecoLocatario}.</p>
+    
+    <p>Imóvel objeto do contrato de locação:</p><br>
+    
+    <p>Localizado em ${enderecoImovel}, Loteamento: ${loteamentoBairro}, Quadra: ${numeroQuadra}, Lote: ${numeroLote}, Área do Lote: ${areaLote}, Área Edificada: ${areaEdificada}, Valor do aluguel: ${valorAluguel} e Forma de pagamento do aluguel: ${formaPagamentoAluguel}.</p>
+   
+    <p>Cláusulas Contratuais:</p>
+
+    <p>1. OBJETO DO CONTRATO: O presente contrato tem por objeto a locação do imóvel situado à ${enderecoImovel}, devidamente registrado sob a matrícula nº [número da matrícula] no Cartório de Registro de Imóveis de Londrina/Pr, com as seguintes características: loteamento ${loteamentoBairro}, quadra nº ${numeroQuadra}, lote nº ${numeroLote}, área do lote ${areaLote} m² e área edificada ${areaEdificada} m².\ \ ${valorAluguel}, que será pago pelo LOCATÁRIO da seguinte forma: ${formaPagamentoAluguel}, todo dia [dia do mês] de cada mês, a partir de ${dataLocacao}.</p>
+
+    <p>3. PRAZO DE LOCAÇÃO: O prazo desta locação é de [número] meses, com início em ${dataLocacao} e término em ${dataFinal}.</p>
+    
+    <p>4. CONDIÇÕES DE ENTREGA E DEVOLUÇÃO DO IMÓVEL: O imóvel é entregue ao LOCATÁRIO em perfeitas condições de uso, com todos os sistemas (elétrico, hidráulico, etc.) e acessórios (portas, janelas, louças, etc.) em pleno funcionamento. O LOCATÁRIO se obriga a restituir o imóvel, ao final da locação, no mesmo estado em que o recebeu, salvo as deteriorações decorrentes do uso normal.</p>
+    
+    <p> 5. DESPESAS E ENCARGOS: Todas as despesas de consumo (água, luz, gás, telefone, internet), condomínio, IPTU e demais taxas e tributos que recaírem sobre o imóvel durante o período de locação serão de responsabilidade do (a) LOCATÁRIO (A) ${nomeLocatario} - CPF: ${cpfLocatario}, conforme acordado entre as partes.</p>
+   
+    <p> 6. MULTA POR ATRASO E DESCUMPRIMENTO: Em caso de atraso no pagamento do aluguel, o LOCATÁRIO pagará multa de [percentual]% sobre o valor do aluguel, acrescido de juros de [percentual]% ao mês. Em caso de descumprimento de qualquer outra cláusula deste contrato, a parte infratora pagará multa equivalente a [valor da multa, ex: três aluguéis], além de eventuais perdas e danos.</p>
+   
+    <p> 7. INADIMPLÊNCIA E RESCISÃO: Caso o LOCATÁRIO (A) ${nomeLocatario} - CPF: ${cpfLocatario} não cumpra com os pagamentos acordados ou demais obrigações contratuais, o presente contrato poderá ser rescindido pelo LOCADOR (A) ${nomeLocador} - CPF: ${cpfLocador}, com a imediata desocupação do imóvel e cobrança dos valores devidos, multas e encargos.</p>
+   
+    <p>8. VISTORIA: O LOCATÁRIO declara ter vistoriado o imóvel e o encontrado em perfeitas condições de uso e habitabilidade, conforme termo de vistoria anexo que faz parte integrante deste contrato.</p>
+    
+    <p>9. DISPOSIÇÕES FINAIS: Este contrato é firmado em duas vias de igual teor, assinadas pelas partes e por duas testemunhas, obrigando-se seus herdeiros e sucessores ao seu fiel cumprimento.</p>
+    
+    </justify>
+    
+    
+    <p>Londrina, ${dataLocacao}.</p><br><br>
+
+    <p>Assinaturas:</p><br><br>
+
+    <p>LOCADOR (A): ${nomeLocador} - CPF: ${cpfLocador}</p><br><br>
+
+    <p>LOCATÁRIO (A): ${nomeLocatario} - CPF: ${cpfLocatario}</p><br><br>
+
+    <p>Testemunha 1: ${nomeTestemunha01} - CPF: ${cpfTestenhuma01}</p><br><br>
+
+    <p>Testemunha 2: ${nomeTestemunha02} - CPF: ${cpfTestenhuma02}</p><br><br>
+
+    <hr>
+
+    <center>
+      
+    <h3>IMOBILIÁRIO NOME XXXXXX - CNPJ Nº XXXXXXXXXXXXXXXXXXXXXXX</h3>
+    <p>Rua XXXXXXXXXXXXXXXXXX, nº - Bairro XXXXXX - CEP XXXXX-XXX - Complemento XXXXX</p>
+    <p>Nome da Cidade - Nome do Estado</p>
+    <p>Telefone: (0xx) XXXX-XXXX</p>
+    <p>Site: XXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+    <p>E-mail: XXXXXXXXXXXXXXXXXXXXXXXX</p>
+
+    </center>
+
+    `;
+
+    document.getElementById('conteudoContrato').innerHTML = contrato;
+    document.getElementById('contratoGerado').style.display = 'block';
+
+    const botao = document.getElementById('baixarPDF');
+    if (botao) {
+      botao.addEventListener('click', async function () {
+        const { jsPDF } = window.jspdf;
+        const contrato = document.getElementById('conteudoContrato');
+
+        const canvas = await html2canvas(contrato, {
+          scale: 2,
+          useCORS: true
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        const imgProps = pdf.getImageProperties(imgData);
+
+        const margin = 10; // margem de 10mm
+        const usableWidth = pageWidth - 2 * margin;
+        const usableHeight = (imgProps.height * usableWidth) / imgProps.width;
+
+        let remainingHeight = usableHeight;
+        let currentPosition = margin;
+
+        while (remainingHeight > 0) {
+          pdf.addImage(imgData, 'PNG', margin, currentPosition, usableWidth, usableHeight);
+          remainingHeight -= pageHeight - 2 * margin;
+          if (remainingHeight > 0) {
+            pdf.addPage();
+            currentPosition = margin;
+          }
+        }
+
+        pdf.save('contrato_compra_venda.pdf');
+      }, { once: true });
+    }
+  });
+});
+
+  </script>
+
+</body>
+</html>

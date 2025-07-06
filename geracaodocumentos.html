@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SISTEMA DE GESTÃO DE IMOBILIÁRIA: GERAÇÃO DE DOCUMENTOS.</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+
+/* Começo do código da estilização do menu de navegação */
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #004080;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.3s;
+}
+
+.menu ul li a:hover {
+  color: #ffd700;
+}
+
+.menu-icon {
+  font-size: 1.8em;
+  display: none;
+  cursor: pointer;
+}
+
+/* Esconde o checkbox */
+.menu-toggle {
+  display: none;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu ul {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #004080;
+    width: 100%;
+    display: none;
+  }
+
+  .menu ul li {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .menu-toggle:checked + .menu-icon + .menu ul {
+    display: flex;
+  }
+}
+
+
+/* Final do código da estilização do menu de navegação */
+
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #e6f0ff, #ffffff);
+  color: #333;
+}
+
+.header {
+  background-color: #004080;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  animation: slideIn 1s ease;
+}
+
+.header h1 {
+  font-size: 2rem;
+}
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 30px;
+}
+
+.service-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.service-card i {
+  font-size: 3rem;
+  color: #004080;
+  margin-bottom: 15px;
+}
+
+.service-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.service-card p {
+  font-size: 0.95rem;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.footer {
+  background-color: #004080;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from { transform: translateY(-100px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .service-card {
+    padding: 15px;
+  }
+}
+
+
+  </style>
+
+</head>
+
+<header class="navbar">
+    <div class="logo">
+      <b><p>S. G. I.</p></b>
+    </div>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+
+    <nav class="menu">
+      <ul>
+
+        <li><a href="institucional.html">Sair</a></li>
+     
+      </ul>
+    </nav>
+  </header>
+
+
+<body>
+  <header class="header">
+    <h1>Sistema de Gestão de Imobiliária: Geração de Documentos.</h1>
+  </header>
+
+  <section class="services">
+
+
+    <div class="service-card" onclick="redirectTo('calculadoracorretagem.html')">
+    <i class="fas fa-dollar-sign"></i>
+    <h2>Calculadora Corretagem e Imposto de Renda Devido.</h2>
+    <p>Apuração para subtração do valor da corretagem o valor de imposto de renda devido.</p>
+    </div>
+
+    <div class="service-card" onclick="redirectTo('contratoprestacaoservicos.html')">
+    <i class="fas fa-handshake"></i>
+    <h2>Contrato de Serviços Imobiliários.</h2>
+    <p>Geração de contrato de serviços imobiliários.</p>
+    </div>
+
+    <div class="service-card" onclick="redirectTo('contratovenda.html')">
+      <i class="fas fa-file-signature"></i>
+      <h2>Contrato de Venda</h2>
+      <p>Geração de contrato de venda de imóveis.</p>
+    </div>
+
+    <div class="service-card" onclick="redirectTo('contratolocacao.html')">
+      <i class="fas fa-file-contract"></i>
+      <h2>Contrato de Locação</h2>
+      <p>Geração de contrato de locação de imóveis.</p>
+    </div>
+
+    <div class="service-card" onclick="redirectTo('boletos.html')">
+      <i class="fas fa-barcode"></i>
+      <h2>Gerar Boletos</h2>
+      <p>Geração de boletos para cobrança.</p>
+    </div>
+
+    <div class="service-card" onclick="redirectTo('qrcode.html')">
+      <i class="fas fa-qrcode"></i>
+      <h2>Gerar QR Code</h2>
+      <p>Geração de QR Code para pagamentos.</p>
+    </div>
+
+    
+
+  </section>
+
+  <footer class="footer">
+    <i>
+      <p>Web programa desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
+    </i>
+  </footer>
+
+<script>
+
+function redirectTo(url) {
+  window.location.href = url;
+}
+
+</script>
+
+
+</body>
+</html>

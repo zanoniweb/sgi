@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SISTEMA DE GESTÃO DE IMOBILIÁRIA: CONTRATO DE COMPRA E VENDA DE IMÓVEL.</title>
+  
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+ /* Começo do código da estilização do menu de navegação */
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #004080;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.3s;
+}
+
+.menu ul li a:hover {
+  color: #ffd700;
+}
+
+.menu-icon {
+  font-size: 1.8em;
+  display: none;
+  cursor: pointer;
+}
+
+/* Esconde o checkbox */
+.menu-toggle {
+  display: none;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu ul {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #004080;
+    width: 100%;
+    display: none;
+  }
+
+  .menu ul li {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .menu-toggle:checked + .menu-icon + .menu ul {
+    display: flex;
+  }
+}
+
+
+/* Final do código da estilização do menu de navegação */
+
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  text-align: justify;
+  margin: 20mm;
+  color: #000;
+}
+
+fieldset {
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  font-size: 16px;
+}
+
+@media print {
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+    }
+
+    #conteudoContrato {
+        width: 180mm;
+        margin: 0 auto;
+        font-size: 14pt;
+        line-height: 1.6;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    #conteudoContrato p {
+        margin-bottom: 10px;
+    }
+
+    #conteudoContrato h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    p, div, span, label {
+        page-break-inside: avoid;
+        orphans: 3;
+        widows: 3;
+    }
+
+    button {
+        display: none;
+    }
+
+    @page {
+        size: A4;
+        margin: 20mm;
+    }
+}
+
+</style>
+
+
+</head>
+
+<header class="navbar">
+    <div class="logo">
+      <b><p>S. G. I.</p></b>
+    </div>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+
+    <nav class="menu">
+      <ul>
+
+         <li><a href="geracaodocumentos.html">Voltar Geração de Documentos</a></li>
+        <li><a href="institucional.html">Sair</a></li>
+     
+      </ul>
+    </nav>
+  </header>
+
+<body>
+
+  <h1>Coleta de dados: Contrato de Compra e Venda de Imóvel</h1>
+  <form id="formContrato">
+    <fieldset>
+      <b><legend>Dados do Vendedor (a)</legend></b>
+      <label>Nome: <input type="text" id="nomeVendedor" required autocomplete="off"></label><br>
+      <label>CPF: <input type="text" id="cpfVendedor" required autocomplete="off"></label><br>
+      <label>Endereço: <input type="text" id="enderecoVendedor" required autocomplete="off"></label>
+      <label>Data da Venda: <input type="text" id="dataCompra" required autocomplete="off"></label>
+    </fieldset>
+
+    <fieldset>
+      <b><legend>Dados do Comprador (a)</legend></b>
+      <label>Nome: <input type="text" id="nomeComprador" required autocomplete="off"></label><br>
+      <label>CPF: <input type="text" id="cpfComprador" required autocomplete="off"></label><br>
+      <label>Endereço: <input type="text" id="enderecoComprador" required autocomplete="off"></label>
+    </fieldset>
+
+    <fieldset>
+      <b><legend>Dados da Testemunha 01</legend></b>
+      <label>Nome: <input type="text" id="nomeTestemunha01" required autocomplete="off"></label><br>
+      <label>CPF: <input type="text" id="cpfTestemunha01" required autocomplete="off"></label><br>
+    </fieldset>
+
+    <fieldset>
+      <b><legend>Dados da Testemunha 02</legend></b>
+      <label>Nome: <input type="text" id="nomeTestemunha02" required autocomplete="off"></label><br>
+      <label>CPF: <input type="text" id="cpfTestemunha02" required autocomplete="off"></label><br>
+    </fieldset>
+
+    <fieldset>
+      <b><legend>Detalhes do Imóvel Objeto da Venda:</legend></b>
+      
+      <label>Endereço do Imóvel: <input type="text" id="enderecoImovel" required autocomplete="off"></label><br>
+
+      <label>Loteamento: <input type="text" id="loteamentoBairro" required autocomplete="off"></label><br>
+
+      <label>Quadra: <input type="text" id="numeroQuadra" required autocomplete="off"></label><br>
+
+      <label>Lote: <input type="text" id="numeroLote" required autocomplete="off"></label><br>
+   
+      <label>Área do Lote (m²): <input type="text" id="areaLote" required autocomplete="off"></label><br>
+  
+      <label>Área Edificada (m²): <input type="text" id="areaEdificada" required autocomplete="off"></label><br>
+  
+      <label>Valor: <input type="number" id="valorImovel" required autocomplete="off"></label><br>
+
+      <label>Forma de Pagamento: <input type="text" id="formaPagamento" required autocomplete="off"></label>
+    </fieldset>
+
+    <button type="submit">Gerar Contrato</button>
+  </form>
+
+  <div id="contratoGerado" style="display:none;">
+    <div id="conteudoContrato"></div>
+    <button id="baixarPDF" type="button">Baixar PDF</button>
+  </div>
+
+   <center>
+        <i>
+        <footer>
+            <p>Web programa desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
+        </footer>
+        </i>
+    </center>
+
+  <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('formContrato').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const nomeVendedor = document.getElementById('nomeVendedor').value;
+    const cpfVendedor = document.getElementById('cpfVendedor').value;
+    const enderecoVendedor = document.getElementById('enderecoVendedor').value;
+
+    const nomeComprador = document.getElementById('nomeComprador').value;
+    const cpfComprador = document.getElementById('cpfComprador').value;
+    const enderecoComprador = document.getElementById('enderecoComprador').value;
+    const dataCompra = document.getElementById('dataCompra').value;
+
+    const nomeTestemunha01 = document.getElementById('nomeTestemunha01').value;
+    const cpfTestenhuma01 = document.getElementById('cpfTestemunha01').value;
+    
+    const nomeTestemunha02 = document.getElementById('nomeTestemunha02').value;
+    const cpfTestenhuma02 = document.getElementById('cpfTestemunha02').value;
+
+    const enderecoImovel = document.getElementById('enderecoImovel').value;
+    const loteamentoBairro = document.getElementById('loteamentoBairro').value;
+    const numeroQuadra = document.getElementById('numeroQuadra').value;
+    const numeroLote = document.getElementById('numeroLote').value;
+    const areaLote = document.getElementById('areaLote').value;
+    const areaEdificada = document.getElementById('areaEdificada').value;
+    const valorImovel = document.getElementById('valorImovel').value;
+    const formaPagamento = document.getElementById('formaPagamento').value;
+
+    const contrato = `
+    
+    <center>
+    <h1>IMOBILIÁRIO NOME XXXXXX - CNPJ Nº XXXXXXXXXXXXXXXXXXXXXXX</h1>
+    </center>
+
+    <hr>
+
+    <center>
+      <h2>Contrato de Compra e Venda de Imóvel</h2> 
+    </center>
+
+    <justify>
+
+      <p><strong>Data da Compra:</strong> ${dataCompra}.</p>
+      <p><strong>VENDEDOR (A):</strong> ${nomeVendedor}, CPF: ${cpfVendedor}, residente em ${enderecoVendedor}.</p>
+      <p><strong>COMPRADOR (A):</strong> ${nomeComprador}, CPF: ${cpfComprador}, residente em ${enderecoComprador}.</p>
+      <p><strong>Imóvel objeto do contrato de compra e venda:</strong></p> 
+      
+      <p><strong> Localizado em ${enderecoImovel}, Loteamento: ${loteamentoBairro}, Quadra: ${numeroQuadra}, Lote: ${numeroLote}, Área do Lote: ${areaLote}, Área Edificada: ${areaEdificada}, VALOR: R$ ${valorImovel} e Forma de Pagamento: ${formaPagamento}.</strong></p> 
+      
+      <p><strong>Cláusulas Contratuais:</strong</p>
+
+      <p>1. OBJETO DO CONTRATO: O presente contrato tem por objeto a compra e venda do imóvel situado à ${enderecoImovel}, devidamente registrado sob a matrícula nº [número da matrícula] no Cartório de Registro de Imóveis de Londrina/Pr, com as seguintes características: loteamento ${loteamentoBairro}, quadra nº ${numeroQuadra}, lote nº ${numeroLote}, área do lote ${areaLote} m² e área edificada ${areaEdificada} m².</p>
+      <p>2. PREÇO E FORMA DE PAGAMENTO: O imóvel será vendido pelo valor total de R$ ${valorImovel}, que será pago pelo COMPRADOR da seguinte forma: ${formaPagamento}</p>
+      <p>3. TRANSFERÊNCIA DE POSSE E ENTREGA DAS CHAVES: A posse do imóvel será transferida ao COMPRADOR na data de ${dataCompra}, mediante o pagamento integral do valor acordado. A entrega das chaves ocorrerá na mesma data.</p>
+      <p>4. DESPESAS E TRIBUTOS: Todas as despesas cartorárias, impostos e taxas decorrentes da transferência do imóvel serão de responsabilidade do (a) comprador (a) ${nomeComprador} - CPF: ${cpfComprador}, conforme acordado entre as partes.</p>
+      <p>5. MULTA POR DESCUMPRIMENTO: Em caso de descumprimento de qualquer cláusula deste contrato, a parte infratora pagará multa equivalente a [percentual]% do valor total do imóvel, além de eventuais perdas e danos.</p>
+      <p>6. INADIMPLÊNCIA E RESCISÃO: Caso o COMPRADOR (A) ${nomeComprador} - CPF: ${cpfComprador} não cumpra com os pagamentos acordados, o presente contrato poderá ser rescindido pelo VENDEDOR (A) ${nomeVendedor} - CPF: ${cpfVendedor}, com a devolução parcial dos valores pagos, descontando-se multas e encargos.</p>
+      <p>7. CLÁUSULA DE EVICÇÃO: O VENDEDOR (A) ${nomeVendedor} - CPF: ${cpfVendedor} declara que o imóvel está livre e desembaraçado de quaisquer ônus, dívidas ou litígios. Caso haja qualquer reivindicação de terceiros sobre o imóvel, o VENDEDOR (A) se responsabiliza pela solução do problema e pela restituição dos valores pagos pelo COMPRADOR (A) ${nomeComprador} - CPF: ${cpfComprador}.</p>
+      <p>8. DISPOSIÇÕES FINAIS: Este contrato é firmado em duas vias de igual teor, assinadas pelas partes e por duas testemunhas, obrigando-se seus herdeiros e sucessores ao seu fiel cumprimento.</p><br><br>
+     
+      </justify>
+
+
+      <p>Londrina, ${dataCompra}.</p><br><br>
+
+      <p><strong>Assinaturas:</strong></p><br><br>
+
+      <p>VENDEDOR (A): <b>${nomeVendedor}</b> - CPF: ${cpfVendedor}</p><br><br>
+
+      <p>COMPRADOR (A): <b>${nomeComprador}</b> - CPF: ${cpfComprador}</p><br><br>
+
+      <p>Testemunha 1: <b>${nomeTestemunha01}</b> - CPF: ${cpfTestenhuma01}</p><br><br>
+
+      <p>Testemunha 2: <b>${nomeTestemunha02}</b> - CPF: ${cpfTestenhuma02}</p><br><br><br><br><br><br><br><br><br><br>    
+
+    <hr>
+
+    <center>
+    <h1>IMOBILIÁRIO NOME XXXXXX - CNPJ Nº XXXXXXXXXXXXXXXXXXXXXXX</h1>
+    <p>Rua XXXXXXXXXXXXXXXXXX, nº - Bairro XXXXXX - Complemento XXXXX - CEP XXXXX-XXX</p>
+    <p>Nome da Cidade - Nome do Estado</p>
+    <p>Telefone: (0xx) XXXX-XXXX</p>
+    <p>Site: XXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+    <p>E-mail: XXXXXXXXXXXXXXXXXXXXXXXX</p>
+    </center>
+    `;
+
+    document.getElementById('conteudoContrato').innerHTML = contrato;
+    document.getElementById('contratoGerado').style.display = 'block';
+
+    const botao = document.getElementById('baixarPDF');
+    if (botao) {
+      botao.addEventListener('click', async function () {
+        const { jsPDF } = window.jspdf;
+        const contrato = document.getElementById('conteudoContrato');
+
+        const canvas = await html2canvas(contrato, {
+          scale: 2,
+          useCORS: true
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        const imgProps = pdf.getImageProperties(imgData);
+
+        const margin = 10; // margem de 10mm
+        const usableWidth = pageWidth - 2 * margin;
+        const usableHeight = (imgProps.height * usableWidth) / imgProps.width;
+
+        let remainingHeight = usableHeight;
+        let currentPosition = margin;
+
+        while (remainingHeight > 0) {
+          pdf.addImage(imgData, 'PNG', margin, currentPosition, usableWidth, usableHeight);
+          remainingHeight -= pageHeight - 2 * margin;
+          if (remainingHeight > 0) {
+            pdf.addPage();
+            currentPosition = margin;
+          }
+        }
+
+        pdf.save('contrato_compra_venda.pdf');
+      }, { once: true });
+    }
+  });
+});
+
+  </script>
+
+</body>
+</html>
